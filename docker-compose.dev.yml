@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:15.4
+    container_name: postgres
+    volumes:
+      - db-store:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=template
+      - POSTGRES_USER=postgres
+    restart: always
+    ports:
+      - 5432:5432
+    networks:
+      - app-net
+
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: ./frontend/dev.Dockerfile
+    volumes:
+      - ./frontend:/app
+    restart: always
+    ports:
+      - 3333:3000
+      - 5555:5555
+    networks:
+      - app-net
+    tty: true
+    stdin_open: true
+
+volumes:
+  db-store:
+
+networks:
+  app-net:
