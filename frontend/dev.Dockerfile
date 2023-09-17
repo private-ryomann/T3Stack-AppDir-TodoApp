@@ -10,5 +10,4 @@ RUN npm ci
 
 COPY ./frontend .
 
-# CMD npm run dev
-CMD tail -F /dev/null
+CMD npm run dev
